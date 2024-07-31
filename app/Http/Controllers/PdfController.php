@@ -130,8 +130,8 @@ class PdfController extends Controller
             Log::info('File path: ' . $pdfFilePath);
 
             // Assuming the Flask server is running on http://127.0.0.1:5000
-            $flaskServerUrl = env('PYTHON_API_URL', "http://44.219.8.97:5000") . '/extract_table';
-
+            // $flaskServerUrl = env('PYTHON_API_URL', "http://44.219.8.97:5000") . '/extract_table';
+            $flaskServerUrl = env('PYTHON_API_URL', "http://127.0.0.1:5000") . '/extract_table';
             // Make a POST request to the Flask server
             $client = new Client();
             $response = $client->post($flaskServerUrl, [
@@ -159,7 +159,7 @@ class PdfController extends Controller
             Log::info('File path: ' . $pdfFilePath);
 
             // Assuming the Flask server is running on http://127.0.0.1:5000
-            $flaskServerUrl = env('PYTHON_API_URL', 'http://44.219.8.97:5000') . '/extract_mrp';
+            $flaskServerUrl = env('PYTHON_API_URL', 'http://127.0.0.1:5000') . '/extract_mrp';
 
             // Make a POST request to the Flask server
             $client = new Client();
@@ -190,7 +190,7 @@ class PdfController extends Controller
             Log::info('File path: ' . $pdfFilePath);
 
             // Assuming the Flask server is running on http://127.0.0.1:5000
-            $flaskServerUrl = env('PYTHON_API_URL', 'http://44.219.8.97:5000') . '/extract_ack';
+            $flaskServerUrl = env('PYTHON_API_URL', 'http://127.0.0.1:5000') . '/extract_ack';
 
             // Make a POST request to the Flask server
             $client = new Client();

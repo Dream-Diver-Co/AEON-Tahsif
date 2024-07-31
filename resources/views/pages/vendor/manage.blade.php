@@ -55,6 +55,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td><img src="{{ asset($vendor->logo) }}" alt="Vendor Logo" style="width: 80px;"></td>
                                         <td>{{ $vendor->name }}</td>
+                                        
                                     </tr>
 
                                     @include('pages.vendor.modals.vendor_edit')

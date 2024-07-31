@@ -10,8 +10,11 @@
                     <div class="card-element-first">
                         <p>{{ $vendor->name }}</p>
                     </div>
+                    
                     <div class="card-element-second">
-                        <img src="{{ asset($vendor->logo) }}">
+                        <!-- <img src="{{ asset($vendor->logo) }}"> -->
+                        <img src="{{ asset('storage/' . $vendor->logo) }}" alt="Vendor Logo">
+
                     </div>
 
                     {{-- </div> --}}
