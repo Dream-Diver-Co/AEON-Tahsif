@@ -12,8 +12,8 @@
                     </div>
                     
                     <div class="card-element-second">
-                        <!-- <img src="{{ asset($vendor->logo) }}"> -->
-                        <img src="{{ asset('storage/' . $vendor->logo) }}" alt="Vendor Logo">
+                        <img src="{{ asset($vendor->logo) }}">
+                        <!-- <img src="{{ asset('storage/' . $vendor->logo) }}" alt="Vendor Logo"> -->
 
                     </div>
 
