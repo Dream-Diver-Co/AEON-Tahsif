@@ -32,6 +32,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- tahsif -->
                             <div class="form-group">
                                 <label for="select_vendor" class="text-left">Select Vendor<span
                                         style="color:red">*</span>:</label>
@@ -45,6 +46,7 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- tahsif........ -->
                             {{-- <div class="form-group">
                                 <label for="plm" class="text-left" id="plm-label">PLM:</label>
                                 <div class=""><input type="hidden" class="form-control form-control-sm"
@@ -88,7 +90,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="department" class="col-5 text-right">Department<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7">
@@ -96,7 +98,80 @@
                                         <option value="">Select Department</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
+                           <!-- Other HTML and Blade template code -->
+
+        <div class="form-group">
+            <label for="select_vendor" class="text-left">Department<span style="color:red">*</span>:</label>
+            <div class="">
+                <select class="form-control form-control-sm" id="select_vendor_upload" name="select_vendor_upload" required>
+                    <option value="">Select department</option>
+                    @foreach ($departments as $dept)
+                        <option value="{{ $dept->id }}">{{ $dept->name }}</option>
+                    @endforeach
+                    <option value="add_new">Add Department</option>
+                      
+                </select>
+                <div id="add-department-container" style="display: none;">
+                    <input type="text" id="new-department-name" class="form-control form-control-sm" placeholder="Enter department name">
+                    <button type="button" id="save-department" class="btn btn-primary mt-2">Save Department</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectElement = document.getElementById('select_vendor_upload');
+            const addDepartmentContainer = document.getElementById('add-department-container');
+            const saveDepartmentButton = document.getElementById('save-department');
+
+            selectElement.addEventListener('change', function() {
+                if (selectElement.value === 'add_new') {
+                    addDepartmentContainer.style.display = 'block';
+                } else {
+                    addDepartmentContainer.style.display = 'none';
+                }
+            });
+
+            saveDepartmentButton.addEventListener('click', function() {
+                const departmentName = document.getElementById('new-department-name').value;
+
+                if (departmentName) {
+                    fetch('/departments', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ name: departmentName })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Add new department to dropdown
+                            const option = document.createElement('option');
+                            option.value = data.department.id;
+                            option.textContent = data.department.name;
+                            selectElement.add(option);
+                            selectElement.value = data.department.id;
+                            addDepartmentContainer.style.display = 'none';
+                        } else {
+                            alert('Error adding department');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                } else {
+                    alert('Department name is required');
+                }
+            });
+        });
+        </script>
+
+
+
                             <div class="form-group row">
                                 <label for="buyer_price" class="col-5 text-right">Buyer Price<span
                                         style="color:red">*</span>:</label>
@@ -1633,5 +1708,19 @@
 
 
         });
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     fetch('{{ url('/departments') }}')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             const departmentSelect = document.getElementById('department');
+        //             data.forEach(department => {
+        //                 const option = document.createElement('option');
+        //                 option.value = department.id; // Adjust if you use a different unique field
+        //                 option.textContent = department.name; // Adjust if you use a different display field
+        //                 departmentSelect.appendChild(option);
+        //             });
+        //         })
+        //         .catch(error => console.error('Error fetching departments:', error));
+        // });
     </script>
 @endsection

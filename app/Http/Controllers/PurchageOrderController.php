@@ -46,7 +46,9 @@ class PurchageOrderController extends Controller
     {
         $buyers = Buyer::all();
         $vendors = Vendor::all();
-        return view('pages.po.create', compact('buyers', 'vendors'));
+        $departments = Department::all();
+        
+        return view('pages.po.create', compact('buyers', 'vendors','departments'));
     }
 
     /**
