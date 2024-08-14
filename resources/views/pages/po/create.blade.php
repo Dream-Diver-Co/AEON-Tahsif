@@ -100,77 +100,59 @@
                                 </div>
                             </div> -->
                            <!-- Other HTML and Blade template code -->
+ 
+<!-- tahsif dropdown start -->
+<div class="form-group row">
+    <label for="select_dept" class="col-5 text-right">Department<span style="color:red">*</span>:</label>
+    <div class="position-relative col-7">
+        <!-- Input Box Trigger -->
+        <input type="text" class="form-control form-control-sm" placeholder="Select department" id="departmentInput" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-        <div class="form-group">
-            <label for="select_vendor" class="text-left">Department<span style="color:red">*</span>:</label>
-            <div class="">
-                <select class="form-control form-control-sm" id="select_vendor_upload" name="select_vendor_upload" required>
-                    <option value="">Select department</option>
-                    @foreach ($departments as $dept)
-                        <option value="{{ $dept->id }}">{{ $dept->name }}</option>
-                    @endforeach
-                    <option value="add_new">Add Department</option>
-                      
-                </select>
-                <div id="add-department-container" style="display: none;">
-                    <input type="text" id="new-department-name" class="form-control form-control-sm" placeholder="Enter department name">
-                    <button type="button" id="save-department" class="btn btn-primary mt-2">Save Department</button>
+        <!-- Dropdown Menu -->
+        <div class="dropdown-menu w-100" aria-labelledby="departmentInput">
+            @foreach ($departments as $dept)
+                <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-dept="{{ $dept->name }}">
+                    <span>{{ $dept->name }}</span>
+                    @can('user.delete')
+                        <form action="{{ route('delete-department', ['id' => $dept->id]) }}" method="POST" class="ml-2">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this department?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    @endcan
                 </div>
-            </div>
+                <div class="dropdown-divider"></div>
+            @endforeach
+            @can('user.add')
+                <div class="px-3 py-2">
+                    <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-department">
+                        <i class="fas fa-plus-circle"></i> Add Department
+                    </button>
+                </div>
+            @endcan
         </div>
+    </div>
+</div>
 
-        
-        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectElement = document.getElementById('select_vendor_upload');
-            const addDepartmentContainer = document.getElementById('add-department-container');
-            const saveDepartmentButton = document.getElementById('save-department');
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the input field and dropdown items
+        const departmentInput = document.getElementById('departmentInput');
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
 
-            selectElement.addEventListener('change', function() {
-                if (selectElement.value === 'add_new') {
-                    addDepartmentContainer.style.display = 'block';
-                } else {
-                    addDepartmentContainer.style.display = 'none';
-                }
-            });
-
-            saveDepartmentButton.addEventListener('click', function() {
-                const departmentName = document.getElementById('new-department-name').value;
-
-                if (departmentName) {
-                    fetch('/departments', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({ name: departmentName })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Add new department to dropdown
-                            const option = document.createElement('option');
-                            option.value = data.department.id;
-                            option.textContent = data.department.name;
-                            selectElement.add(option);
-                            selectElement.value = data.department.id;
-                            addDepartmentContainer.style.display = 'none';
-                        } else {
-                            alert('Error adding department');
-                        }
-                    })
-                    .catch(error => console.error('Error:', error));
-                } else {
-                    alert('Department name is required');
-                }
+        // Add event listener to each dropdown item
+        dropdownItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+                // Set the input value to the selected department's name
+                departmentInput.value = this.getAttribute('data-dept');
             });
         });
-        </script>
-
-
+    });
+</script>
+<!-- tahsif dropdown end -->
 
                             <div class="form-group row">
                                 <label for="buyer_price" class="col-5 text-right">Buyer Price<span
@@ -179,7 +161,7 @@
                                         id="buyer_price" name="buyer_price" required></div>
                             </div>
                             <div class="form-group row">
-                                <label for="vendor_price" class="col-5 text-right">FOB INV<span
+                                <label for="vendor_price" class="col-5 text-right">FACTORY FOB<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7"><input type="text" class="form-control form-control-sm"
                                         id="vendor_price" name="vendor_price" required></div>
@@ -303,7 +285,7 @@
 
 
                             <div class="form-group row">
-                                <label for="style_note" class="col-5 text-right">FACTORY FOB<span
+                                <label for="style_note" class="col-5 text-right">FOB INV<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7"><input type="text" class="form-control form-control-sm"
                                         id="style_note" name="style_note" required></div>
@@ -437,6 +419,7 @@
 
 
     </div>
+    @include('pages.buyer.modals.department_create')
 @endsection
 
 @section('scripts')

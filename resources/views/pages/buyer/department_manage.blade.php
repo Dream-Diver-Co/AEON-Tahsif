@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Departments</h3>
+                        <h3 class="card-title">Department</h3>
                         @can('user.add')
                             <p class="btn btn-success btn-sm float-right" data-toggle="modal" data-target="#create-department">
                                 <span class="fas fa-plus-circle"></span>
