@@ -115,8 +115,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/department-delete/{id}', [DepartmentController::class, 'destroy'])->name('delete-department');
     Route::put('department-manage/{id}', [DepartmentController::class, 'update'])->name('update-department');
     // fabric quality
-    // Route::post('/fabric-quality-create', [FabricQualityController::class, 'store'])->name('save-fabric-quality');
-    // Route::delete('/fabric-quality-delete/{id}', [FabricQualityController::class, 'destroy'])->name('delete-fabric-quality');
+    Route::get('fabric-quality-manage', [FabricQualityController::class, 'manageIndex'])->name('fabric-quality-manage');
+    Route::post('/fabric-quality-create', [FabricQualityController::class, 'store'])->name('save-fabric-quality');
+    Route::delete('/fabric-quality-delete/{id}', [FabricQualityController::class, 'destroy'])->name('delete-fabric-quality');
     //febric content
     Route::get('fabric-content-manage', [FabricContentController::class, 'manageIndex'])->name('fabric-content-manage');
     Route::post('/fabric-content-create', [FabricContentController::class, 'store'])->name('save-fabric-content');
