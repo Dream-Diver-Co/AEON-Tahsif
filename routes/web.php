@@ -15,6 +15,8 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PurchageOrderController;
 use App\Http\Controllers\VendorContactController;
 use App\Http\Controllers\VendorController;
+use App\Http\Controllers\FabricQualityController;
+use App\Http\Controllers\FabricContentController;
 use Faker\Guesser\Name;
 
 /*
@@ -112,6 +114,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/department-create', [DepartmentController::class, 'store'])->name('save-department');
     Route::delete('/department-delete/{id}', [DepartmentController::class, 'destroy'])->name('delete-department');
     Route::put('department-manage/{id}', [DepartmentController::class, 'update'])->name('update-department');
+    // fabric quality
+    // Route::post('/fabric-quality-create', [FabricQualityController::class, 'store'])->name('save-fabric-quality');
+    // Route::delete('/fabric-quality-delete/{id}', [FabricQualityController::class, 'destroy'])->name('delete-fabric-quality');
+    //febric content
+    Route::get('fabric-content-manage', [FabricContentController::class, 'manageIndex'])->name('fabric-content-manage');
+    Route::post('/fabric-content-create', [FabricContentController::class, 'store'])->name('save-fabric-content');
+    Route::delete('/fabric-content-delete/{id}', [FabricContentController::class, 'destroy'])->name('delete-fabric-content');
+
 
     //Buyer Contacts
     Route::get('buyer_contact-manage', [BuyerContactController::class, 'manageIndex'])->name('buyer_contact-manage');
