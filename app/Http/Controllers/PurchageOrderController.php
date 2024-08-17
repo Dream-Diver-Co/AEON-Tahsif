@@ -11,6 +11,8 @@ use App\Models\OrderItem;
 use App\Models\PurchageOrder;
 use App\Models\Vendor;
 use App\Models\Department;
+use App\Models\FabricContent;
+use App\Models\FabricQuality;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,8 +49,10 @@ class PurchageOrderController extends Controller
         $buyers = Buyer::all();
         $vendors = Vendor::all();
         $departments = Department::all();
+        $fabric_contents = FabricContent::all();
+        $fabric_qualitys = FabricQuality::all();
         
-        return view('pages.po.create', compact('buyers', 'vendors','departments'));
+        return view('pages.po.create', compact('buyers', 'vendors','departments','fabric_contents','fabric_qualitys'));
     }
 
     /**

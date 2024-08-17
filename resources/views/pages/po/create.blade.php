@@ -101,58 +101,58 @@
                             </div> -->
                            <!-- Other HTML and Blade template code -->
  
-<!-- tahsif dropdown start -->
-<div class="form-group row">
-    <label for="select_dept" class="col-5 text-right">Department<span style="color:red">*</span>:</label>
-    <div class="position-relative col-7">
-        <!-- Input Box Trigger -->
-        <input type="text" class="form-control form-control-sm" placeholder="Select department" id="departmentInput" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!-- tahsif dropdown start -->
+                            <div class="form-group row">
+                                <label for="select_dept" class="col-5 text-right">Department<span style="color:red">*</span>:</label>
+                                <div class="position-relative col-7">
+                                    <!-- Input Box Trigger -->
+                                    <input type="text" class="form-control form-control-sm" placeholder="Select department" id="departmentInput" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-        <!-- Dropdown Menu -->
-        <div class="dropdown-menu w-100" aria-labelledby="departmentInput">
-            @foreach ($departments as $dept)
-                <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-dept="{{ $dept->name }}">
-                    <span>{{ $dept->name }}</span>
-                    @can('user.delete')
-                        <form action="{{ route('delete-department', ['id' => $dept->id]) }}" method="POST" class="ml-2">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this department?')">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    @endcan
-                </div>
-                <div class="dropdown-divider"></div>
-            @endforeach
-            @can('user.add')
-                <div class="px-3 py-2">
-                    <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-department">
-                        <i class="fas fa-plus-circle"></i> Add Department
-                    </button>
-                </div>
-            @endcan
-        </div>
-    </div>
-</div>
+                                    <!-- Dropdown Menu -->
+                                    <div class="dropdown-menu w-100" aria-labelledby="departmentInput">
+                                        @foreach ($departments as $dept)
+                                            <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-dept="{{ $dept->name }}">
+                                                <span>{{ $dept->name }}</span>
+                                                @can('user.delete')
+                                                    <form action="{{ route('delete-department', ['id' => $dept->id]) }}" method="POST" class="ml-2">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this department?')">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                @endcan
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                        @endforeach
+                                        @can('user.add')
+                                            <div class="px-3 py-2">
+                                                <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-department">
+                                                    <i class="fas fa-plus-circle"></i> Add Department
+                                                </button>
+                                            </div>
+                                        @endcan
+                                    </div>
+                                </div>
+                            </div>
 
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the input field and dropdown items
-        const departmentInput = document.getElementById('departmentInput');
-        const dropdownItems = document.querySelectorAll('.dropdown-item');
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // Get the input field and dropdown items
+                                    const departmentInput = document.getElementById('departmentInput');
+                                    const dropdownItems = document.querySelectorAll('.dropdown-item');
 
-        // Add event listener to each dropdown item
-        dropdownItems.forEach(function(item) {
-            item.addEventListener('click', function() {
-                // Set the input value to the selected department's name
-                departmentInput.value = this.getAttribute('data-dept');
-            });
-        });
-    });
-</script>
-<!-- tahsif dropdown end -->
+                                    // Add event listener to each dropdown item
+                                    dropdownItems.forEach(function(item) {
+                                        item.addEventListener('click', function() {
+                                            // Set the input value to the selected department's name
+                                            departmentInput.value = this.getAttribute('data-dept');
+                                        });
+                                    });
+                                });
+                            </script>
+                            <!-- tahsif dropdown end -->
 
                             <div class="form-group row">
                                 <label for="buyer_price" class="col-5 text-right">Buyer Price<span
@@ -206,18 +206,122 @@
                                         id="plm" name="plm" required></div>
                             </div>
 
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <label for="fabric_quality" class="col-5 text-right">Fabric Quality<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7"><input type="text" class="form-control form-control-sm"
                                         id="fabric_quality" name="fabric_quality" requred></div>
-                            </div>
+                            </div> -->
+                            <!-- Fabric quality tahsif start-->
                             <div class="form-group row">
+                                <label for="select_quality" class="col-5 text-right">Fabric Quality<span style="color:red">*</span>:</label>
+                                <div class="position-relative col-7">
+                                    <!-- Input Box Trigger -->
+                                    <input type="text" class="form-control form-control-sm" placeholder="Select fabric quality" id="qualityInput" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    <!-- Dropdown Menu -->
+                                    <div class="dropdown-menu w-100" aria-labelledby="qualityInput">
+                                        @foreach ($fabric_qualitys as $fquality)
+                                            <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-quality="{{ $fquality->name }}">
+                                                <span>{{ $fquality->name }}</span>
+                                                @can('user.delete')
+                                                    <form action="{{ route('delete-fabric-quality', ['id' => $fquality->id]) }}" method="POST" class="ml-2">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this fabric quality?')">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                @endcan
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                        @endforeach
+                                        @can('user.add')
+                                            <div class="px-3 py-2">
+                                                <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-fabric-quality">
+                                                    <i class="fas fa-plus-circle"></i> Add Fabric Quality
+                                                </button>
+                                            </div>
+                                        @endcan
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    // Get the input field and dropdown items
+                                    const qualityInput = document.getElementById('qualityInput');
+                                    const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+                                    // Add event listener to each dropdown item
+                                    dropdownItems.forEach(function(item) {
+                                        item.addEventListener('click', function() {
+                                            // Set the input value to the selected fabric quality's name
+                                            qualityInput.value = this.getAttribute('data-quality');
+                                        });
+                                    });
+                                });
+                            </script>
+                            <!-- Fabric quality tahsif end -->
+
+                            <!-- <div class="form-group row">
                                 <label for="fabric_content" class="col-5 text-right">Fabric Content<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7"><input type="text" class="form-control form-control-sm"
                                         id="fabric_content" name="fabric_content" required></div>
-                            </div>
+                            </div> -->
+
+                               <!-- Fabrci content tahsif start-->
+                               <div class="form-group row">
+                                <label for="select_dept" class="col-5 text-right">Fabric Content<span style="color:red">*</span>:</label>
+                                <div class="position-relative col-7">
+                                    <!-- Input Box Trigger -->
+                                    <input type="text" class="form-control form-control-sm" placeholder="Select fabric content" id="contentInput" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    <!-- Dropdown Menu -->
+                                    <div class="dropdown-menu w-100" aria-labelledby="contentInput">
+                                        @foreach ($fabric_contents as $fcont)
+                                            <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-fcont="{{ $fcont->name }}">
+                                                <span>{{ $fcont->name }}</span>
+                                                @can('user.delete')
+                                                    <form action="{{ route('delete-fabric-content', ['id' => $fcont->id]) }}" method="POST" class="ml-2">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this fabric content?')">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                @endcan
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                        @endforeach
+                                        @can('user.add')
+                                            <div class="px-3 py-2">
+                                                <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-fabric-content">
+                                                    <i class="fas fa-plus-circle"></i> Add Fabric Content
+                                                </button>
+                                            </div>
+                                        @endcan
+                                    </div>
+                                </div>
+                                </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        // Get the input field and dropdown items
+                                        const contentInput = document.getElementById('contentInput');
+                                        const dropdownItems = document.querySelectorAll('.dropdown-item');
+
+                                        // Add event listener to each dropdown item
+                                        dropdownItems.forEach(function(item) {
+                                            item.addEventListener('click', function() {
+                                                // Set the input value to the selected fabric content's name
+                                                contentInput.value = this.getAttribute('data-fcont');
+                                            });
+                                        });
+                                    });
+                                </script>
+                            <!-- Fabric content tahsif end -->
                             <div class="form-group row">
                                 <label for="fabric_type" class="col-5 text-right">Fabric Type<span
                                         style="color:red">*</span>:</label>
@@ -420,6 +524,9 @@
 
     </div>
     @include('pages.buyer.modals.department_create')
+    @include('pages.buyer.modals.fabric_content_create')
+    @include('pages.buyer.modals.fabric_quality_create')
+
 @endsection
 
 @section('scripts')
