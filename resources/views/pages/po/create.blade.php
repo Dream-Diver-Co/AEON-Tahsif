@@ -90,7 +90,9 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="form-group row">
+                            
+                           <!-- Other HTML and Blade template code -->
+                         <div class="form-group row">
                                 <label for="department" class="col-5 text-right">Department<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7">
@@ -98,60 +100,36 @@
                                         <option value="">Select Department</option>
                                     </select>
                                 </div>
-                            </div> -->
-                           <!-- Other HTML and Blade template code -->
- 
+                            </div>
                             <!-- tahsif dropdown start -->
-                            <div class="form-group row">
-                                <label for="select_dept" class="col-5 text-right">Department<span style="color:red">*</span>:</label>
+                            <!-- <div class="form-group row">
+                                <label for="department" class="col-5 text-right">Department<span style="color:red">*</span>:</label>
                                 <div class="position-relative col-7">
-                                    <!-- Input Box Trigger -->
-                                    <input type="text" class="form-control form-control-sm" placeholder="Select department" id="departmentInput" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <input type="text" class="form-control form-control-sm" placeholder="Select department" name="department" id="department" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                    <!-- Dropdown Menu -->
-                                    <div class="dropdown-menu w-100" aria-labelledby="departmentInput">
-                                        @foreach ($departments as $dept)
+                                    <div class="dropdown-menu w-100" aria-labelledby="department">
+                                        @foreach ($department_dds as $dept)
                                             <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-dept="{{ $dept->name }}">
                                                 <span>{{ $dept->name }}</span>
                                                 @can('user.delete')
-                                                    <form action="{{ route('delete-department', ['id' => $dept->id]) }}" method="POST" class="ml-2">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this department?')">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDeletion(event, '{{ route('ddd-delete', ['id' => $dept->id]) }}', '{{ $dept->name }}')">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
                                                 @endcan
                                             </div>
                                             <div class="dropdown-divider"></div>
                                         @endforeach
                                         @can('user.add')
                                             <div class="px-3 py-2">
-                                                <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-department">
+                                                <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-ddd">
                                                     <i class="fas fa-plus-circle"></i> Add Department
                                                 </button>
                                             </div>
                                         @endcan
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
-
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    // Get the input field and dropdown items
-                                    const departmentInput = document.getElementById('departmentInput');
-                                    const dropdownItems = document.querySelectorAll('.dropdown-item');
-
-                                    // Add event listener to each dropdown item
-                                    dropdownItems.forEach(function(item) {
-                                        item.addEventListener('click', function() {
-                                            // Set the input value to the selected department's name
-                                            departmentInput.value = this.getAttribute('data-dept');
-                                        });
-                                    });
-                                });
-                            </script>
                             <!-- tahsif dropdown end -->
 
                             <div class="form-group row">
@@ -205,134 +183,80 @@
                                 <div class="col-7"><input type="text" class="form-control form-control-sm"
                                         id="plm" name="plm" required></div>
                             </div>
-
-                            <!-- <div class="form-group row">
-                                <label for="fabric_quality" class="col-5 text-right">Fabric Quality<span
-                                        style="color:red">*</span>:</label>
-                                <div class="col-7"><input type="text" class="form-control form-control-sm"
-                                        id="fabric_quality" name="fabric_quality" requred></div>
-                            </div> -->
                             <!-- Fabric quality tahsif start-->
                             <div class="form-group row">
-                                <label for="select_quality" class="col-5 text-right">Fabric Quality<span style="color:red">*</span>:</label>
-                                <div class="position-relative col-7">
-                                    <!-- Input Box Trigger -->
-                                    <input type="text" class="form-control form-control-sm" placeholder="Select fabric quality" id="qualityInput" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <label for="fabric_quality" class="col-5 text-right">Fabric Quality<span style="color:red">*</span>:</label>
+                            <div class="position-relative col-7">
+                                <input type="text" class="form-control form-control-sm" placeholder="Select fabric quality" id="fabric_quality" name="fabric_quality" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                    <!-- Dropdown Menu -->
-                                    <div class="dropdown-menu w-100" aria-labelledby="qualityInput">
-                                        @foreach ($fabric_qualitys as $fquality)
-                                            <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-quality="{{ $fquality->name }}">
-                                                <span>{{ $fquality->name }}</span>
-                                                @can('user.delete')
-                                                    <form action="{{ route('delete-fabric-quality', ['id' => $fquality->id]) }}" method="POST" class="ml-2">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this fabric quality?')">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
-                                                @endcan
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                        @endforeach
-                                        @can('user.add')
-                                            <div class="px-3 py-2">
-                                                <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-fabric-quality">
-                                                    <i class="fas fa-plus-circle"></i> Add Fabric Quality
+                                <div class="dropdown-menu w-100" aria-labelledby="fabric_quality">
+                                    @foreach ($fabric_qualitys as $fquality)
+                                        <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-fquality="{{ $fquality->name }}">
+                                            <span>{{ $fquality->name }}</span>
+
+                                            @can('user.delete')
+                                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDeletion(event, '{{ route('delete-fabric-quality', ['id' => $fquality->id]) }}', '{{ $fquality->name }}')">
+                                                    <i class="fas fa-trash-alt"></i>
                                                 </button>
-                                            </div>
-                                        @endcan
-                                    </div>
+                                            @endcan
+                                        </div>
+                                        <div class="dropdown-divider"></div>
+                                    @endforeach
+                                    @can('user.add')
+                                        <div class="px-3 py-2">
+                                            <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-fabric-quality">
+                                                <i class="fas fa-plus-circle"></i> Add Fabric Quality
+                                            </button>
+                                        </div>
+                                    @endcan
                                 </div>
                             </div>
-
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    // Get the input field and dropdown items
-                                    const qualityInput = document.getElementById('qualityInput');
-                                    const dropdownItems = document.querySelectorAll('.dropdown-item');
-
-                                    // Add event listener to each dropdown item
-                                    dropdownItems.forEach(function(item) {
-                                        item.addEventListener('click', function() {
-                                            // Set the input value to the selected fabric quality's name
-                                            qualityInput.value = this.getAttribute('data-quality');
-                                        });
-                                    });
-                                });
-                            </script>
+                            </div>
+ 
                             <!-- Fabric quality tahsif end -->
 
-                            <!-- <div class="form-group row">
-                                <label for="fabric_content" class="col-5 text-right">Fabric Content<span
-                                        style="color:red">*</span>:</label>
-                                <div class="col-7"><input type="text" class="form-control form-control-sm"
-                                        id="fabric_content" name="fabric_content" required></div>
-                            </div> -->
 
-                               <!-- Fabrci content tahsif start-->
-                               <div class="form-group row">
-                                <label for="select_dept" class="col-5 text-right">Fabric Content<span style="color:red">*</span>:</label>
-                                <div class="position-relative col-7">
-                                    <!-- Input Box Trigger -->
-                                    <input type="text" class="form-control form-control-sm" placeholder="Select fabric content" id="contentInput" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <!-- Fabric content tahsif start-->
+                            <div class="form-group row">
+                                    <label for="fabric_content" class="col-5 text-right">Fabric Content<span style="color:red">*</span>:</label>
+                                    <div class="position-relative col-7">
+                                        <input type="text" class="form-control form-control-sm" placeholder="Select fabric content" id="fabric_content" name="fabric_content" readonly data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                    <!-- Dropdown Menu -->
-                                    <div class="dropdown-menu w-100" aria-labelledby="contentInput">
-                                        @foreach ($fabric_contents as $fcont)
-                                            <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-fcont="{{ $fcont->name }}">
-                                                <span>{{ $fcont->name }}</span>
-                                                @can('user.delete')
-                                                    <form action="{{ route('delete-fabric-content', ['id' => $fcont->id]) }}" method="POST" class="ml-2">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this fabric content?')">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+                                        <div class="dropdown-menu w-100" aria-labelledby="fabric_content">
+                                            @foreach ($fabric_contents as $fcont)
+                                                <div class="dropdown-item d-flex justify-content-between align-items-center px-3 py-2" data-fcont="{{ $fcont->name }}">
+                                                    <span>{{ $fcont->name }}</span>
+                    
+                                                    @can('user.delete')
+                                                    <button type="button" class="btn btn-danger btn-sm" onclick="confirmDeletion(event, '{{ route('delete-fabric-content', ['id' => $fcont->id]) }}', '{{ $fcont->name }}')">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
                                                 @endcan
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                        @endforeach
-                                        @can('user.add')
-                                            <div class="px-3 py-2">
-                                                <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-fabric-content">
-                                                    <i class="fas fa-plus-circle"></i> Add Fabric Content
-                                                </button>
-                                            </div>
-                                        @endcan
+                                                </div>
+                                                <div class="dropdown-divider"></div>
+                                            @endforeach
+                                            @can('user.add')
+                                                <div class="px-3 py-2">
+                                                    <button class="btn btn-success btn-sm btn-block" data-toggle="modal" data-target="#create-fabric-content">
+                                                        <i class="fas fa-plus-circle"></i> Add Fabric Content
+                                                    </button>
+                                                </div>
+                                            @endcan
+                                        </div>
                                     </div>
                                 </div>
-                                </div>
-
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        // Get the input field and dropdown items
-                                        const contentInput = document.getElementById('contentInput');
-                                        const dropdownItems = document.querySelectorAll('.dropdown-item');
-
-                                        // Add event listener to each dropdown item
-                                        dropdownItems.forEach(function(item) {
-                                            item.addEventListener('click', function() {
-                                                // Set the input value to the selected fabric content's name
-                                                contentInput.value = this.getAttribute('data-fcont');
-                                            });
-                                        });
-                                    });
-                                </script>
                             <!-- Fabric content tahsif end -->
                             <div class="form-group row">
-                                <label for="fabric_type" class="col-5 text-right">Fabric Type<span
-                                        style="color:red">*</span>:</label>
-                                <div class="col-7"><select class="form-control form-control-sm" id="fabric_type"
-                                        name="fabric_type" required>
-                                        <option value="">Select Fabric Type</option>
-                                        <option value="1">Local Fabric</option>
-                                        <option value="2">Special Yarn/ AOP Fabric</option>
-                                        <option value="3">Imported Fabric</option>
-                                        <option value="4">Solid</option>
-                                    </select></div>
+                            <label for="fabric_type" class="col-5 text-right">Fabric Type<span
+                                    style="color:red">*</span>:</label>
+                            <div class="col-7"><select class="form-control form-control-sm" id="fabric_type"
+                                    name="fabric_type" required>
+                                    <option value="">Select Fabric Type</option>
+                                    <option value="1">Local Fabric</option>
+                                    <option value="2">Special Yarn/ AOP Fabric</option>
+                                    <option value="3">Imported Fabric</option>
+                                    <option value="4">Solid</option>
+                                </select></div>
                             </div>
                             <div class="form-group row">
                                 <label for="supplier_no" class="col-5 text-right">Supplier Number<span
@@ -347,10 +271,8 @@
                                         id="supplier_name" name="supplier_name" required></div>
                             </div>
 
-
-
-
                         </div>
+                     
                         <div class="col-md-6 justify-content-start">
                             <div class="form-group row">
                                 <label for="select_vendor" class="col-5 text-right">Select Vendor<span
@@ -365,37 +287,28 @@
                                     </select>
                                 </div>
                             </div>
-
-
-
                             <div class="form-group row">
                                 <label for="ex_factory_date" class="col-5 text-right">Factory Ex-Factory Date<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7"><input type="date" class="form-control form-control-sm datepicker"
                                         id="ex_factory_date" name="ex_factory_date" required></div>
                             </div>
-
                             <div class="form-group row">
                                 <div class="col-5"></div>
                                 <div class="col-7" id="ex_factory_date_difference"></div>
                             </div>
-
                             <div class="form-group row">
                                 <label for="access_price" class="col-5 text-right">Accessories Price<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7"><input type="text" class="form-control form-control-sm"
                                         id="access_price" name="access_price"></div>
                             </div>
-
-
                             <div class="form-group row">
                                 <label for="style_note" class="col-5 text-right">FOB INV<span
                                         style="color:red">*</span>:</label>
                                 <div class="col-7"><input type="text" class="form-control form-control-sm"
                                         id="style_note" name="style_note" required></div>
                             </div>
-
-
                             <div class="form-group row">
                                 <label for="upload_picture_germent" class="col-5 text-right">Upload Picture
                                     germent<span style="color:red">*</span>:</label>
@@ -444,24 +357,14 @@
                                 <div class="col-7">
                                     <textarea class="form-control form-control-sm" id="note" name="note" required></textarea>
                                 </div>
-                            </div>
-
-
-
+                            </div>               
                         </div>
-
-
-
-
                     </div>
-
                     <br>
                     <hr>
-
-
-                    {{-- <button type="submit" class="btn btn-primary">Save</button> --}}
-                    {{-- items --}}
-                    <div>
+                    <!-- {{-- <button type="submit" class="btn btn-primary">Save</button> --}}
+                    {{-- items --}} -->
+                    <!-- <div>
                         <h5>PO ITEMS</h5>
                         <p class="btn btn-sm btn-success" id="add-row">Add row</p>
                         <table class="table table-responsive table-bordered mt-4">
@@ -503,13 +406,12 @@
 
                             </tbody>
                         </table>
-                    </div>
+                    </div> -->
                     <hr>
                     <input type="hidden" id="download_pdf" name="download_pdf" value="no" required>
                     <input type="hidden" id="send_pdf" name="send_pdf" value="no" required>
                     <button type="submit" class="btn btn-primary btn-sm" id="save-po">Save PO</button>
-                    <button type="submit" class="btn btn-info btn-sm" id="save_and_download">Save and download
-                        PO</button>
+                    <button type="submit" class="btn btn-info btn-sm" id="save_and_download">Save and download PO</button>
                     <button type="submit" class="btn btn-info btn-sm" id="save_and_send">Save and send
                         PO</button>
                     {{-- <a href="{{ route('pdf-view') }}" class="btn btn-info btn-sm">Download PO</a> --}}
@@ -523,13 +425,114 @@
 
 
     </div>
-    @include('pages.buyer.modals.department_create')
+    @include('pages.buyer.modals.ddd_create')
     @include('pages.buyer.modals.fabric_content_create')
     @include('pages.buyer.modals.fabric_quality_create')
 
 @endsection
 
 @section('scripts')
+ <!-- tahsif -->
+  
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+         function handleDropdownSelection(inputId, dataAttr) {
+            const inputElement = document.getElementById(inputId);
+            const dropdownItems = document.querySelectorAll(`[data-${dataAttr}]`);
+
+            dropdownItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    inputElement.value = this.getAttribute(`data-${dataAttr}`);
+                    // Optionally hide the dropdown after selection
+                    const dropdownMenu = inputElement.nextElementSibling;
+                    dropdownMenu.classList.remove('show');
+                });
+            });
+    }
+
+        handleDropdownSelection('fabric_quality', 'fquality');
+        handleDropdownSelection('department', 'dept');
+        handleDropdownSelection('fabric_content', 'fcont');
+    });
+
+    function confirmDeletion(event, url, itemName) {
+        event.preventDefault(); // Prevent default form submission
+
+        if (confirm(`Are you sure you want to delete "${itemName}"?`)) {
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert(`${itemName} deleted successfully`);
+                    const item = event.target.closest('.dropdown-item');
+                    if (item) {
+                        item.remove(); // Remove item from DOM
+                    }
+                } else {
+                    alert('An error occurred while deleting the item');
+                }
+            })
+            .catch(() => {
+                alert('An error occurred while deleting the item');
+            });
+        }
+    }
+
+</script>
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function handleDropdownSelection(inputId, dataAttr) {
+                const inputElement = document.getElementById(inputId);
+                const dropdownItems = document.querySelectorAll(`[data-${dataAttr}]`);
+
+                dropdownItems.forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        inputElement.value = this.getAttribute(`data-${dataAttr}`);
+                        // Optionally hide the dropdown after selection
+                        $(inputElement).dropdown('hide');
+                    });
+                });
+            }
+
+            handleDropdownSelection('fabric_content', 'fcont');
+        });
+</script> -->
+
+
+<!-- <script>
+    function confirmDeletion(event) {
+        event.preventDefault(); // Prevent default button action
+
+        const button = $(event.target).closest('button');
+        const id = button.data('id');
+        const name = button.data('name');
+
+        if (confirm(`Are you sure you want to delete "${name}"?`)) {
+            $.ajax({
+                url: `/delete-fabric-content/${id}`, // Replace with the correct route
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert('Fabric content deleted successfully');
+                    button.closest('.dropdown-item').remove(); // Optionally remove item from DOM
+                },
+                error: function(xhr) {
+                    alert('An error occurred while deleting the fabric content');
+                }
+            });
+        }
+    }
+</script> -->
+
+
 
     <script>
         function updateValue(id) {
@@ -606,20 +609,31 @@
             let slNo = 1;
 
 
-            // #("#save-po").on('click', function(){
-            //     this.preventDefault();
+            $("#save-po").on('click', function(){
+                this.preventDefault();
 
 
-            // })
+            })
 
             // save and download
             $('#save_and_download').on('click', function() {
-                $('#download_pdf').val('yes')
-            })
+            console.log('Button clicked');
+            $('#download_pdf').val('yes');
+            console.log('Value set to:', $('#download_pdf').val());
+
+            // Check if the form is being submitted
+            console.log('Form submission:', $('form').length > 0);
+        });
+
 
             $('#save_and_send').on('click', function() {
-                $('#send_pdf').val('yes')
-            })
+                $('#send_pdf').val('yes');
+            });
+
+
+ 
+
+
 
             // Function to add a new row when the "Add row" button is clicked
 
@@ -1798,19 +1812,8 @@
 
 
         });
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     fetch('{{ url('/departments') }}')
-        //         .then(response => response.json())
-        //         .then(data => {
-        //             const departmentSelect = document.getElementById('department');
-        //             data.forEach(department => {
-        //                 const option = document.createElement('option');
-        //                 option.value = department.id; // Adjust if you use a different unique field
-        //                 option.textContent = department.name; // Adjust if you use a different display field
-        //                 departmentSelect.appendChild(option);
-        //             });
-        //         })
-        //         .catch(error => console.error('Error fetching departments:', error));
-        // });
+         
     </script>
+
+    
 @endsection
