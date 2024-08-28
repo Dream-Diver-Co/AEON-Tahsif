@@ -17,6 +17,7 @@ use App\Http\Controllers\VendorContactController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\FabricQualityController;
 use App\Http\Controllers\FabricContentController;
+use App\Http\Controllers\DDController;
 use Faker\Guesser\Name;
 
 /*
@@ -118,10 +119,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('fabric-quality-manage', [FabricQualityController::class, 'manageIndex'])->name('fabric-quality-manage');
     Route::post('/fabric-quality-create', [FabricQualityController::class, 'store'])->name('save-fabric-quality');
     Route::delete('/fabric-quality-delete/{id}', [FabricQualityController::class, 'destroy'])->name('delete-fabric-quality');
+   
     //febric content
     Route::get('fabric-content-manage', [FabricContentController::class, 'manageIndex'])->name('fabric-content-manage');
     Route::post('/fabric-content-create', [FabricContentController::class, 'store'])->name('save-fabric-content');
-    Route::delete('/fabric-content-delete/{id}', [FabricContentController::class, 'destroy'])->name('delete-fabric-content');
+    Route::delete('/delete-fabric-content/{id}', [FabricContentController::class, 'destroy'])->name('delete-fabric-content');
+    // Drop-down deparment
+    Route::get('ddd-manage', [DDController::class, 'manageIndex'])->name('ddd-manage');
+    Route::post('ddd-create', [DDController::class, 'store'])->name('save-ddd');
+    Route::delete('delete-ddd/{id}', [DDController::class, 'destroy'])->name('ddd-delete');
+
 
 
     //Buyer Contacts

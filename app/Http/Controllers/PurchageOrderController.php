@@ -13,6 +13,7 @@ use App\Models\Vendor;
 use App\Models\Department;
 use App\Models\FabricContent;
 use App\Models\FabricQuality;
+use App\Models\DepartmentDd;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,8 +52,9 @@ class PurchageOrderController extends Controller
         $departments = Department::all();
         $fabric_contents = FabricContent::all();
         $fabric_qualitys = FabricQuality::all();
+        $department_dds = DepartmentDd::all();
         
-        return view('pages.po.create', compact('buyers', 'vendors','departments','fabric_contents','fabric_qualitys'));
+        return view('pages.po.create', compact('buyers', 'vendors','departments','fabric_contents','fabric_qualitys', 'department_dds'));
     }
 
     /**

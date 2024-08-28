@@ -31,11 +31,22 @@ class FabricQualityController extends Controller
         return redirect()->back()->with('success', 'Data saved successfully!');
     }
 
+    // public function destroy($id)
+    // {
+    //     $fabric_quality = FabricQuality::findOrFail($id);
+    //     $fabric_quality->delete();
+
+    //     return redirect()->back()->with('success', 'Data successfully deleted!');
+    // }
     public function destroy($id)
     {
-        $fabric_quality = FabricQuality::findOrFail($id);
-        $fabric_quality->delete();
-
-        return redirect()->back()->with('success', 'Data successfully deleted!');
+        $fabricQuality = FabricQuality::find($id);
+    
+        if ($fabricQuality) {
+            $fabricQuality->delete();
+            return response()->json(['success' => true]);
+        }
+    
+        return response()->json(['success' => false], 404);
     }
 }

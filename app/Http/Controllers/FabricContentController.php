@@ -31,11 +31,20 @@ class FabricContentController extends Controller
         return redirect()->back()->with('success', 'Data saved successfully!');
     }
 
+   
+
+    
+
+    
     public function destroy($id)
     {
-        $fabric_content = FabricContent::findOrFail($id);
-        $fabric_content->delete();
-
-        return redirect()->back()->with('success', 'Data successfully deleted!');
+        $fabricContent = FabricContent::find($id);
+    
+        if ($fabricContent) {
+            $fabricContent->delete();
+            return response()->json(['success' => true]);
+        }
+    
+        return response()->json(['success' => false], 404);
     }
-}
+}    
