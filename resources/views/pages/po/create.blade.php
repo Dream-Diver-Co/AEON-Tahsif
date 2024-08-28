@@ -364,7 +364,7 @@
                     <hr>
                     <!-- {{-- <button type="submit" class="btn btn-primary">Save</button> --}}
                     {{-- items --}} -->
-                    <!-- <div>
+                    <div>
                         <h5>PO ITEMS</h5>
                         <p class="btn btn-sm btn-success" id="add-row">Add row</p>
                         <table class="table table-responsive table-bordered mt-4">
@@ -406,7 +406,7 @@
 
                             </tbody>
                         </table>
-                    </div> -->
+                    </div>
                     <hr>
                     <input type="hidden" id="download_pdf" name="download_pdf" value="no" required>
                     <input type="hidden" id="send_pdf" name="send_pdf" value="no" required>
@@ -425,7 +425,7 @@
 
 
     </div>
-    @include('pages.buyer.modals.ddd_create')
+    <!-- @include('pages.buyer.modals.ddd_create') -->
     @include('pages.buyer.modals.fabric_content_create')
     @include('pages.buyer.modals.fabric_quality_create')
 
@@ -1179,12 +1179,41 @@
                             const supplierNo = data.keys['Supplier'];;
                             const supplierName = data.keys['Supplier Name'];
 
+// ........................start changed by pdf new upload system problem............................
+// ........................pdf jessy issue start solving part ........................
+
                             const currency = data.keys['Currency'];
-                            const terms = data.keys['Payment Terms'].match(
-                                /^(\w)\w+\s+(\w)\w+\s+at\s+(\w)/i)[1] + data.keys[
-                                'Payment Terms'].match(/^(\w)\w+\s+(\w)\w+\s+at\s+(\w)/i)[
-                                2] + '@' + data.keys['Payment Terms'].match(/at\s+(\w+)/i)[
-                                1];
+                            // const terms = data.keys['Payment Terms'].match(
+                            //     /^(\w)\w+\s+(\w)\w+\s+at\s+(\w)/i)[1] + data.keys[
+                            //     'Payment Terms'].match(/^(\w)\w+\s+(\w)\w+\s+at\s+(\w)/i)[
+                            //     2] + '@' + data.keys['Payment Terms'].match(/at\s+(\w+)/i)[
+                            //     1];
+
+                            const paymentTerms = data.keys['Payment Terms'];
+                            const regex = /^(\w)\w+\s+(\w)\w+\s+at\s+(\w)/i;
+                            const match = paymentTerms ? paymentTerms.match(regex) : null;
+
+                            let terms = '';
+
+                            if (match) {
+
+                            terms = match[1] + match[2] + '@' + (paymentTerms.match(/at\s+(\w+)/i) ? paymentTerms.match(/at\s+(\w+)/i)[1] : '');
+                            } else {
+
+                            console.error("The payment terms do not match the expected format.");
+                            }
+
+                            // Ensure `terms` is used properly here
+                            console.log(terms); // Just for debugging, you can remove this line as needed
+
+                            // Use `terms` in your success function or wherever necessary
+                            function handleSuccess() {
+                                // Example usage of `terms`
+                                console.log("Processed terms:", terms);
+                                // Your existing success logic here
+                            }
+// .................pdf jessy issue ............end
+// ......................changed by ............
 
                             // const shipMode = data.keys['Ship Method'];
 
